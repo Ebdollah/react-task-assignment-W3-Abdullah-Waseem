@@ -1,20 +1,18 @@
-import React,{useRef, useContext, useEffect} from 'react'
+import React,{useRef, useContext} from 'react'
 import {useNavigate } from 'react-router-dom'
 import MyContext from '../context/MyContext';
 import axios from 'axios';
-
+// const authApiUrl = process.env.REACT_APP_AUTH_API;
 
 
 export default function Login() {
-  const email = useRef();
+  const username = useRef();
   const password = useRef();
   const navigate = useNavigate();
   const {setIsLoggedin} = useContext(MyContext);
-  const token = (localStorage.getItem('token'))
+//   const token = (localStorage.getItem('token'))
   const handleSubmit =(e) =>{
     e.preventDefault();
-    console.log('A email was submitted: ' + email.current.value);
-    console.log('A password was submitted: ' + password.current.value);
     fetchUser();
   }
   const fetchUser = async () => {
@@ -26,17 +24,15 @@ export default function Login() {
           'Content-Type': 'application/json',
         },
         data: JSON.stringify({  // Use `data` instead of `body`
-          username: email.current.value,
+          username: username.current.value,
           password: password.current.value,
-          expiresInMins: 1,
+        //   expiresInMins: 1,
         }),
       });
   
-    //   console.log('Data:', response.data);
       localStorage.setItem("token", response.data.token);
       setIsLoggedin(true);
       navigate('/');
-    //   console.log(response.data.token);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -52,10 +48,10 @@ export default function Login() {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3 mb-6 md:mb-0">
           <label htmlFor="text" className="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2">
-            Email
+            UserName
           </label>
           <input
-          ref={email}
+          ref={username}
             id="text"
             type="text"
             name="text"

@@ -5,9 +5,7 @@ function useListingData(url) {
     const [loader, setLoader] = useState(true);
     const [peopleData, setPeopleData] = useState([]); // Full list
     const [errors, setErrors] = useState(null);
-    // const [next, setNext] = useState('');
-    // const [previous, setPrevious] = useState('');
-
+    
     useEffect(()=>{
         const fetchData = async () => {
             try {
@@ -16,7 +14,7 @@ function useListingData(url) {
                 throw new Error('Network response was not ok');
               }
               const data = await response.json();
-              console.log(data.results);
+            //   console.log(data.results);
               setPeopleData(data);
             //   setNext(data.next);
             //   setPrevious(data.previous);

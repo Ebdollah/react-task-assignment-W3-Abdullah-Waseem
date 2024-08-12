@@ -3,6 +3,8 @@ import CardComponent from "./CardComponent";
 import Filter from "./Filter";
 import Logout from "./Logout";
 import useListingData from "./useListingData";
+// const peopleApiUrl = process.env.REACT_APP_PEOPLE_API;
+
 
 const ListingPage = () => {
   //   const [people, setPeople] = useState([]); // Full list
@@ -38,12 +40,12 @@ const ListingPage = () => {
   useEffect(() => {
     const updateData = () => {
       if (filter.length > 0) {
-        const filteredItems = peopleData.results.filter((p) =>
+        const filteredItems = peopleData?.results.filter((p) =>
           p.name.toLowerCase().includes(filter.toLowerCase())
         );
         setFilteredPeople(filteredItems);
       } else {
-        setFilteredPeople(peopleData.results);
+        setFilteredPeople(peopleData?.results);
       }
     };
     updateData();
@@ -65,9 +67,9 @@ const ListingPage = () => {
         Star Wars Characters
       </h1>
       <div className="flex mx-96">
-      {peopleData.previous && <button onClick={handlePrevious} className="rounded-lg p-2 m-2 bg-blue-500">Previous</button>}
+      {peopleData?.previous && <button onClick={handlePrevious} className="rounded-lg p-2 m-2 bg-blue-500">Previous</button>}
         <Filter onSet={setFilter} />
-      {peopleData.next && <button onClick={handleNext} className="rounded-lg p-2 m-2 bg-blue-500">Next</button>}
+      {peopleData?.next && <button onClick={handleNext} className="rounded-lg p-2 m-2 bg-blue-500">Next</button>}
         
       </div>
       <Logout />
