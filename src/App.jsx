@@ -1,7 +1,7 @@
 import React,{useContext, useEffect} from 'react'
 import Login from './components/Login'
 import ListingPage from './components/ListingPage';
-import {Routes, Route, Link, Navigate  } from "react-router-dom";
+import {Routes, Route, Navigate  } from "react-router-dom";
 import MyContext from './context/MyContext';
 
 
@@ -18,7 +18,6 @@ function App() {
 
   return (
     <>
-    {/* {!isLoggedin ?  <Login /> : <LandingPage />} */}
     <Routes>
     {!isLoggedin ? (
           <>
