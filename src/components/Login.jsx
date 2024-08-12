@@ -1,6 +1,7 @@
-import React,{useRef, useContext} from 'react'
+import React,{useRef, useContext, useEffect} from 'react'
 import {useNavigate } from 'react-router-dom'
 import MyContext from '../context/MyContext';
+import axios from 'axios';
 
 
 
@@ -9,6 +10,7 @@ export default function Login() {
   const password = useRef();
   const navigate = useNavigate();
   const {setIsLoggedin} = useContext(MyContext);
+  const token = (localStorage.getItem('token'))
   const handleSubmit =(e) =>{
     e.preventDefault();
     console.log('A email was submitted: ' + email.current.value);
@@ -17,37 +19,32 @@ export default function Login() {
   }
   const fetchUser = async () => {
     try {
-      const response = await fetch('https://dummyjson.com/auth/login', {
-        method: 'POST',
+      const response = await axios({
+        method: 'post', 
+        url: 'https://dummyjson.com/auth/login',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          // username: 'emilys',
+        data: JSON.stringify({  // Use `data` instead of `body`
           username: email.current.value,
-          // password: 'emilyspass',
           password: password.current.value,
-          expiresInMins : 1,
+          expiresInMins: 1,
         }),
       });
   
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-  
-      const data = await response.json();
-      localStorage.setItem("token", data.token);
+    //   console.log('Data:', response.data);
+      localStorage.setItem("token", response.data.token);
       setIsLoggedin(true);
       navigate('/');
-      console.log(data);
+    //   console.log(response.data.token);
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error('Error:', error);
     }
   };
 
-  // useEffect(() => {
-  //   fetchUser();
-  // }, []);
+//   useEffect(()=>{
+//     console.log('navigated to login')
+//   },[token])
   return (
     <form onSubmit={handleSubmit} className="w-full mt-40 max-w-lg mx-auto p-8 bg-gradient-to-b from-teal-900 to-teal-700 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-white mb-6">Login</h2>
@@ -81,9 +78,6 @@ export default function Login() {
       </div>
 
       <div className="flex justify-end space-x-4">
-        <button className="px-4 py-2 bg-transparent text-gray-300 border border-gray-500 rounded hover:text-gray-400">
-          Reset
-        </button>
         <button  className="px-4 py-2 bg-teal-800 text-white rounded hover:bg-teal-700">
           Login
         </button>

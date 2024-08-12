@@ -1,6 +1,6 @@
 import React,{useContext, useEffect} from 'react'
 import Login from './components/Login'
-import LandingPage from './components/LandingPage';
+import ListingPage from './components/ListingPage';
 import {Routes, Route, Link, Navigate  } from "react-router-dom";
 import MyContext from './context/MyContext';
 
@@ -27,7 +27,7 @@ function App() {
           </>
         ) : (
           <>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<ListingPage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </>
         )}
