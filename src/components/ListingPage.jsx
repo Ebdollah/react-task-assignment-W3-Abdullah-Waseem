@@ -3,39 +3,14 @@ import CardComponent from "./CardComponent";
 import Filter from "./Filter";
 import Logout from "./Logout";
 import useListingData from "./useListingData";
-// const peopleApiUrl = process.env.REACT_APP_PEOPLE_API;
-
 
 const ListingPage = () => {
-  //   const [people, setPeople] = useState([]); // Full list
-  const [filteredPeople, setFilteredPeople] = useState([]); // Filtered list
-  //   const [loading, setLoading] = useState(true);
+  const [filteredPeople, setFilteredPeople] = useState([]);
   const [filter, setFilter] = useState("");
-  //   const [error, setError] = useState(null);
 
-  const {loader, peopleData, errors, handleNext, handlePrevious} = useListingData(
+  const { loader, peopleData, errors, handleNext, handlePrevious } = useListingData(
     "https://swapi.dev/api/people/"
   );
-
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const response = await fetch('https://swapi.dev/api/people/');
-  //         if (!response.ok) {
-  //           throw new Error('Network response was not ok');
-  //         }
-  //         const data = await response.json();
-  //         console.log(data.results);
-  //         setPeople(data.results);
-  //       } catch (error) {
-  //         setError(error);
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
-
-  //     fetchData();
-  //   }, []); // Empty dependency array means this effect runs once when the component mounts
 
   useEffect(() => {
     const updateData = () => {
@@ -49,7 +24,7 @@ const ListingPage = () => {
       }
     };
     updateData();
-  }, [filter, peopleData.results]);
+  }, [filter, peopleData?.results]);
 
   if (loader)
     return <div className="text-center mt-8 text-gray-700">Loading...</div>;
@@ -60,17 +35,29 @@ const ListingPage = () => {
       </div>
     );
 
-
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-4xl font-bold text-center mb-6 text-indigo-600">
+    <div className="p-6 bg-teal-700 min-h-screen">
+      <h1 className="text-4xl font-bold text-center mb-6 text-teal-100">
         Star Wars Characters
       </h1>
-      <div className="flex mx-96">
-      {peopleData?.previous && <button onClick={handlePrevious} className="rounded-lg p-2 m-2 bg-blue-500">Previous</button>}
+      <div className="flex justify-between items-center mb-4">
+        {peopleData?.previous && (
+          <button
+            onClick={handlePrevious}
+            className="rounded-lg px-4 py-2 bg-teal-600 text-white hover:bg-teal-500 transition"
+          >
+            Previous
+          </button>
+        )}
         <Filter onSet={setFilter} />
-      {peopleData?.next && <button onClick={handleNext} className="rounded-lg p-2 m-2 bg-blue-500">Next</button>}
-        
+        {peopleData?.next && (
+          <button
+            onClick={handleNext}
+            className="rounded-lg px-4 py-2 bg-teal-600 text-white hover:bg-teal-500 transition"
+          >
+            Next
+          </button>
+        )}
       </div>
       <Logout />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
